@@ -1,21 +1,7 @@
-const express = require('express');
-const port = process.env.PORT || 3000;
-const app = express();
+import app from './app.js';
 
-/**
- * GET = BUSCAR INFORMACAO
- * DELETE = DELETAR UM DADO
- * PUT = ALTERAR UM DADOS
- * POST = CRIAR UM DADOS
- */
-
-// http://localhost:3000/test
-
-app.get('/test',(request, response) => {
-  return response.send('Hello world tchunaite o my goood');
-});
+const port = process.env.PORT || 3000; // Define a porta a partir do .env
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
-
