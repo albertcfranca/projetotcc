@@ -1,21 +1,22 @@
 import { request, response } from 'express';
-import User from '../schemas/user.js'; // Certifique-se de que o caminho está correto e o modelo é importado corretamente
-import pkg from 'bcryptjs'; // Importe o módulo 'bcryptjs' como um pacote
-const { hash } = pkg; // Extraia o método 'hash' do pacote importado
+import User from '../schemas/user.js';
+import pkg from 'bcryptjs';
+const { hash } = pkg;
 
 class UserController {
     async create(request, response) {
         const { name, email, username, password, phone } = request.body;
+
         try {
-            const passwordCrypt = await hash(password, 8); // Hash da senha com bcryptjs
+            const passwordCrypt = await hash(password, 8);
             const newUser = await User.create({
                 name,
                 email,
                 username,
-                password: passwordCrypt, // Use a senha criptografada
+                password: passwordCrypt,
                 phone
             });
-            return response.status(201).json(newUser); // Certifique-se de retornar a resposta corretamente
+            return response.status(201).json(newUser);
         } catch (error) {
             return response.status(400).json({ error: 'Erro ao criar usuário', details: error.message });
         }
@@ -23,3 +24,5 @@ class UserController {
 }
 
 export default new UserController();
+
+

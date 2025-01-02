@@ -16,7 +16,7 @@ class App {
 
     database() {
         mongoose.connect('mongodb+srv://albertcfranca:eJsNJjiyDr2BwVl9@cluster0.ebhfp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-            
+           
         }).then(() => {
             console.log('Conectado ao MongoDB');
         }).catch((error) => {
