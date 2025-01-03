@@ -1,22 +1,26 @@
 import { request, response } from 'express';
 import User from '../schemas/user.js'; // Certifique-se de que o caminho está correto e o modelo é importado corretamente
-import pkg from 'bcryptjs'; // Importe o pacote como um todo
-const { compare } = pkg; // Extraia o método 'compare' do pacote importado
+import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken'; // Importe o pacote como um todo
 const { sign } = jsonwebtoken; // Extraia o método 'sign' do pacote importado
 
 class SessionController {
     async create(request, response) {
         const { username, password } = request.body;
-        
+
         // Verificar se o usuário existe no sistema
         const user = await User.findOne({ username });
         if (!user) {
             return response.status(404).json({ error: "Usuário não encontrado" });
         }
 
+        // Adicionar logs para verificar os valores
+        console.log("Senha fornecida:", password);
+        console.log("Senha armazenada:", user.password);
+
         // Verificar se a senha está correta
-        const passwordMatch = await compare(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        console.log("Resultado da comparação:", passwordMatch);
         if (!passwordMatch) {
             return response.status(404).json({ error: "Senha incorreta" });
         }
